@@ -133,7 +133,16 @@ extension GameScene:SKPhysicsContactDelegate{
         
         for (index,g) in enumerate(grapes){
             if contact.bodyA.node == g || contact.bodyB.node == g {
-                g.hitCount++
+                if !g.isContacted{
+                    println("hit")
+                    g.isContacted = true
+                    g.hitCount++
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+                        Int64(0.1 * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        g.isContacted = false
+                    }
+                }
                 if g.hitCount > 4{
                     g.removeFromParent()
                     grapes.removeAtIndex(index)
@@ -170,4 +179,5 @@ extension GameScene:SKPhysicsContactDelegate{
 
 class Grape:SKSpriteNode {
     var hitCount:Int = 0
+    var isContacted:Bool = false
 }
