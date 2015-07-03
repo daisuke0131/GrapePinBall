@@ -10,7 +10,7 @@ import SpriteKit
 
 class GameScene: SKScene{
     
-    var back = SKSpriteNode(imageNamed: "back")
+    let back = SKSpriteNode(imageNamed: "back")
     
     let grapesPosition:[(x:CGFloat,y:CGFloat)] = [(60.0,500.0),(160.0,500.0),(260.0,500.0),(110.0,400.0),(220.0,400.0)]
     
@@ -32,6 +32,9 @@ class GameScene: SKScene{
         
         //物理効果の設定
         self.physicsBody = SKPhysicsBody(edgeLoopFromRect: frame)
+        self.physicsBody?.dynamic = false
+        self.physicsBody?.restitution = 1.0
+        self.physicsBody?.friction = 0.0
         self.physicsWorld.contactDelegate = self
         
         //ゲームオーバ判定用
