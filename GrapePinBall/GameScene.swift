@@ -149,12 +149,15 @@ extension GameScene:SKPhysicsContactDelegate{
                 }
                 println("count:\(grapes.count)")
                 if grapes.count == 0{
-                    self.paused = true
                     println("success")
-                    
-                    let scene = GameScene()
-                    scene.size = self.view!.frame.size
-                    self.view?.presentScene(scene)
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW,
+                        Int64(2 * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        self.paused = true
+                        let scene = GameScene()
+                        scene.size = self.view!.frame.size
+                        self.view?.presentScene(scene)
+                    }
                 }
             }
         }
